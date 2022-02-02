@@ -11,7 +11,7 @@
         <script>
 			function requisitarPagina(url){
 
-				document.getElementById('loading').innerHTML = '' // limpando os campos dos nós filhos 
+				document.getElementById('conteudo').innerHTML = '' // limpando os campos dos nós filhos 
 
 				// Gif de carregamento Loading
 				if(!document.getElementById('loadingImg')) {
@@ -19,7 +19,7 @@
 					imgLoading.src = './loading.gif'
 					imgLoading.id = 'loadingImg'
 					imgLoading.className = "rounded mx-auto d-block"
-					document.getElementById('loading').appendChild(imgLoading)
+					document.getElementById('conteudo').appendChild(imgLoading)
 				}
 
 				let ajax = new XMLHttpRequest();
@@ -28,19 +28,18 @@
 				
 				// quando tiver resposta do servidor
 				ajax.onreadystatechange = () =>{
+					// se a página foi retornada corretamente do servidor
 					if(ajax.readyState == 4 && ajax.status == 200) {
 
 						// document.getElementById('loadingImg').remove()
-						document.getElementById('loading').innerHTML = `Tudo certo! Status da requisição: ${ajax.status}`
+						document.getElementById('conteudo').innerHTML = ajax.responseText // carrega toda a página automaticamente
 						// console.log('satus da requisicao: ' + ajax.status)
 						// console.log('Finalizado com sucesso!')
 					}
+					// Se a página não existir
 					if(ajax.readyState == 4 && ajax.status == 404) {
-						// document.getElementById('loadingImg').remove()
-						document.getElementById('loading').innerHTML = `Deu errado! Status da requisição: ${ajax.status}`
-
+						document.getElementById('conteudo').innerHTML = `Deu errado! Status da requisição: ${ajax.status} Tente novamente mais tarde 😆`
 						// console.log('satus da requisicao: ' + ajax.status)
-						// console.log('sem acesso!')
 					}
 					// console.log(ajax.readyState)
 				}
@@ -71,8 +70,9 @@
 	    		<div class="col-md-4 center"></div>
 	    		<div class="col-md-4 center">
 	    			<a href="#" class="btn btn-primary" onclick="requisitarPagina('pagina_1_conteudo.php')">Página 1</a>
-	    			<a href="#" class="btn btn-primary" onclick="requisitarPagina('xpagina_2_conteudo.html')">Página 2</a>
+	    			<a href="#" class="btn btn-primary" onclick="requisitarPagina('pagina_2_conteudo.html')">Página 2</a>
 	    			<a href="#" class="btn btn-primary" onclick="requisitarPagina('pagina_3_conteudo.html')">Página 3</a>
+	    			<a href="#" class="btn btn-primary" onclick="requisitarPagina('semConteudo.html')">Página 4</a>
 	    		</div>
 	    		<div class="col-md-4 center"></div>
 	    	</div>
@@ -80,7 +80,7 @@
 	    	<div class="row">
 		    	<div class="col-md-1"></div>
 
-		    	<div class="col-md-10" id="loading">
+		    	<div class="col-md-10" id="conteudo">
 					
 		    	</div>
 		    		
